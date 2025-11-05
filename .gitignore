@@ -7,6 +7,8 @@ wheels/
 *.egg-info
 
 .env
+movies.csv
 
 # Virtual environments
 .venv
+chroma_db_movies
