@@ -2,6 +2,7 @@ import pandas as pd
 import json
 import chromadb
 from consts import C
+from tqdm import tqdm
 
 """
 Reads the movies dataset, embeds the movie titles, and saves the embeddings to a CSV file.
@@ -12,7 +13,7 @@ Instructions to prepare the dataset:
 3. Rename it to movies.csv
 """
 
-ROWS_COUNT = 150
+ROWS_COUNT = 200  # Number of rows to process. Max 45466
 
 print("Reading movies dataset...")
 df = pd.read_csv("movies.csv")
@@ -55,7 +56,7 @@ if collection_name in [c.name for c in client.list_collections()]:
 
 collection = client.create_collection(name=collection_name)
 
-for i, text in enumerate(to_embed):
+for i, text in enumerate(tqdm(to_embed, desc="Adding to ChromaDB")):
     collection.add(
         documents=[text],
         metadatas={"index": i},
